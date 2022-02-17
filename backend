@@ -1,0 +1,155 @@
+function motordata() 
+{
+  const response = variable();
+  for (i=response.mtdlastR-1; i>-1; i--)
+  {
+    if (response.mtdata[i][1].toString() == response.uidno.toString())
+    {
+      p = i;
+      //Logger.log(response.q1.getRange(p+ ":"  +p).getValues())
+      //Logger.log(response.q1.getRange(p,1, 1,10).getValues())
+      response.atsheet.getSheetByName(response.atss[0]).getRange("G6:H6").setValue(response.mtdata[p][2]);
+      response.atsheet.getSheetByName(response.atss[0]).getRange("G7:H7").setValue(response.mtdata[p][3]);
+      response.atsheet.getSheetByName(response.atss[0]).getRange("G8:H8").setValue(response.mtdata[p][4]);
+      response.atsheet.getSheetByName(response.atss[0]).getRange("J7").setValue(response.mtdata[p][5]);
+      response.atsheet.getSheetByName(response.atss[0]).getRange("J8").setValue(response.mtdata[p][6]);
+      response.atsheet.getSheetByName(response.atss[0]).getRange("L6").setValue(response.mtdata[p][7]);
+      response.atsheet.getSheetByName(response.atss[0]).getRange("L7").setValue(response.mtdata[p][8]);
+      response.atsheet.getSheetByName(response.atss[0]).getRange("L8").setValue(response.mtdata[p][9]);
+    }
+  }
+}
+
+function generaldata()
+{
+  const r1 = variable();
+  for (i=r1.mtgnlastR-1; i>-1; i--)
+  {
+    if (r1.mtgndata[i][1].toString() == r1.uidno.toString())
+    {
+      p = i;
+      r1.atsheet.getSheetByName(r1.atss[0]).getRange("G10:H10").setValue(r1.mtgndata[p][2]);
+      r1.atsheet.getSheetByName(r1.atss[0]).getRange("G11:H11").setValue(r1.mtgndata[p][3]);
+      r1.atsheet.getSheetByName(r1.atss[0]).getRange("G12:H12").setValue(r1.mtgndata[p][4]);
+    }
+  }
+
+}
+
+function servicematerial()
+{
+  const r3 = variable();
+  var q11 = [1,2,3,4,5,6,7,8,9,10,11,12];
+  var q10 = "No of Bolts and Allen Key";
+  let q12 = "No of Oilseal";
+  let q13 = "No of Circlip";
+  let q15 = ["End cover", "Terminal Box" , "Terminal Stud"];
+  if(r3.atssfpR.getRange("K27").getValue().toString() == "true")
+    {
+      if(r3.atssfpR.getRange("F46").getValue().toString() == "No of Bolts and Allen Key")
+      {
+      }
+      else
+      {
+        r3.atssfpR.insertRows(46);
+        r3.atssfpR.getRange("E46").setValue("22");
+        r3.atssfpR.getRange("F46").setValue(q10);
+        r3.atssfpR.getRange("H46").setValue(q12);
+        r3.atssfpR.getRange("J46").setValue(q13);
+        var rangeRule = SpreadsheetApp.newDataValidation().requireValueInList(q11);
+        r3.atssfpR.getRange("G46").setDataValidation(rangeRule);
+        var rangeRule = SpreadsheetApp.newDataValidation().requireValueInList(q11);
+        r3.atssfpR.getRange("I46").setDataValidation(rangeRule);
+        var rangeRule = SpreadsheetApp.newDataValidation().requireValueInList(q11);
+        r3.atssfpR.getRange("K46").setDataValidation(rangeRule);
+        var rangeRule1 = SpreadsheetApp.newDataValidation().requireValueInList(q15);
+        r3.atssfpR.getRange("L46").setDataValidation(rangeRule1);
+ 
+      }
+        
+    }
+    else
+    {
+      if(r3.atssfpR.getRange("F46").getValue().toString() == "No of Bolts and Allen Key")
+      {
+        r3.atssfpR.deleteRow(46);
+      }
+    }
+}
+
+
+function servicedatabefore()
+{
+  const r2 = variable();
+  const t2 = transposeArray(r2.atssfpR.getRange("K14:K43").getValues());
+  t4 = [r2.mtssbeforeR-1,r2.uidno.toString(),r2.sdate.toString()];
+  const t3 = t2.toString().split(",");
+  for(var i=0; i<t3.length;i++)
+  {
+    t4[i+3]=t3[i].toString();
+  }
+  r2.mtssbR.appendRow(t4);
+
+}
+
+
+function servicedataafter()
+{
+  const r2 = variable();
+  const t2 = transposeArray(r2.atssfpR.getRange("L14:L43").getValues());
+  t4 = [r2.mtssafterR-1,r2.uidno.toString(),r2.sdate.toString()];
+  const t3 = t2.toString().split(",");
+  for(var i=0; i<t3.length;i++)
+  {
+    t4[i+3]=t3[i].toString();
+  }
+  r2.mtssfR.appendRow(t4);
+
+}
+
+function dropdown()
+{
+  const r3 = variable();
+  let cinlist= r3.cinglt;
+  let csulist = r3.csuplt;
+  let ctchlist = r3.ctchlt;
+  let cilist = SpreadsheetApp.newDataValidation().requireValueInList(cinlist);
+  let cslist = SpreadsheetApp.newDataValidation().requireValueInList(csulist);
+  let ctlist = SpreadsheetApp.newDataValidation().requireValueInList(ctchlist);
+  r3.atssfpR.getRange('L53').setDataValidation(cilist);
+  r3.atssfpR.getRange('L50').setDataValidation(cilist);
+  r3.atssfpR.getRange('G50').setDataValidation(cslist);
+  r3.atssfpR.getRange('G53').setDataValidation(cslist);
+  r3.atssfpR.getRange('H50:J50').setDataValidation(ctlist);
+  r3.atssfpR.getRange('H53:J53').setDataValidation(ctlist);
+
+  r3.atssbpR.getRange('J37:K37').setDataValidation(cilist);
+  r3.atssbpR.getRange('J40:K40').setDataValidation(cilist);
+  r3.atssbpR.getRange('C37').setDataValidation(cslist);
+  r3.atssbpR.getRange('C40').setDataValidation(cslist);
+  r3.atssbpR.getRange('D37:F37').setDataValidation(ctlist);
+  r3.atssbpR.getRange('D40:F40').setDataValidation(ctlist);
+
+  let rplist1 = r3.reportlist1;
+  let rplist2 = r3.reportlist2;
+
+  let rlst1 = SpreadsheetApp.newDataValidation().requireValueInList(rplist1);
+  let rlst2 = SpreadsheetApp.newDataValidation().requireValueInList(rplist2);
+  Logger.log(rplist1)
+  r3.atssfpR.getRange('L4:L5').setDataValidation(rlst1);
+  r3.atssfpR.getRange('K5').setDataValidation(rlst1);
+  if(r3.atssfpR.getRange('F44').getValue() =='Remarks :' || r3.atssfpR.getRange('F45').getValue()=='Remarks :'){
+    r3.atssfpR.getRange('F44:J45').setDataValidation(rlst2);
+  }
+  r3.atssbpR.getRange('C31:K31').setDataValidation(rlst2);
+
+}
+
+
+
+
+function submitfinal()
+{
+  servicedatabefore();
+  servicedataafter();
+}

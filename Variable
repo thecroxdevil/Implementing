@@ -1,0 +1,49 @@
+function variable() 
+{
+  motordb = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1tB2DrWhK6yjw4WlJZFEaaWS6Nje3yINpEI8wtm5IMIo/edit#gid=0");
+  mbss = motordb.getSheets().map(function(x) {return x.getName();});
+  mtdata = motordb.getSheetByName(mbss[0]).getDataRange().getValues();
+  mtdlastR = motordb.getSheetByName(mbss[0]).getLastRow();
+  q1 = motordb.getSheetByName(mbss[0]);
+
+  motorgndb = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1HzkaWK1aEionDMC13y7leGk3MHJWXc-6vvMAr2T7_Ho/edit#gid=0");
+  mbgnss = motorgndb.getSheets().map(function(x) {return x.getName();});
+  mtgndata = motorgndb.getSheetByName(mbgnss[0]).getDataRange().getValues();
+  mtgnlastR = motorgndb.getSheetByName(mbgnss[0]).getLastRow();
+
+
+  mtservicedb = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1ILQEFEqUf0d9zIgZ0ey7PW6cGCh2oxJbpZF1BfLOp8U/edit#gid=0");
+  mtss = mtservicedb.getSheets().map(function(x) {return x.getName();});
+  mtssdata = mtservicedb.getSheetByName(mtss[0]).getDataRange().getValues();
+  mtssbeforeR =mtservicedb.getSheetByName(mtss[0]).getLastRow();
+  mtssafterR =mtservicedb.getSheetByName(mtss[1]).getLastRow();
+  mtssbR = mtservicedb.getSheetByName(mtss[0]);
+  mtssfR = mtservicedb.getSheetByName(mtss[1])
+
+  rsdb = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/10H8hBYEc0FE313gYuujOBkWcvLtODDV5Meq8MDfA3Dw/edit#gid=0");
+  rsdbss = rsdb.getSheets().map(function(x) {return x.getName();});
+  cinglt = rsdb.getSheetByName(rsdbss[0]).getRange('D3:D17').getValues();
+  csuplt = rsdb.getSheetByName(rsdbss[0]).getRange('G3:G17').getValues();
+  ctchlt = rsdb.getSheetByName(rsdbss[0]).getRange('I3:I20').getValues();
+
+
+  reportdb = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1iGdJEjUaOKbCVbXtYsGvnq89at1wwiq4sFjBmT2oVIU/edit#gid=0");
+  reportss = reportdb.getSheets().map(function(x) {return x.getName();});
+  reportlist1 = reportdb.getSheetByName(reportss[0]).getRange('B2:B10').getValues();
+  reportlist2 = reportdb.getSheetByName(reportss[0]).getRange('C2:C10').getValues();
+
+  atsheet = SpreadsheetApp.getActiveSpreadsheet();
+  atss = atsheet.getSheets().map(function(x) {return x.getName();});
+  atssfpR = atsheet.getSheetByName(atss[0]);
+  atssbpR = atsheet.getSheetByName(atss[1]);
+
+
+
+
+  let uidno = atsheet.getSheetByName(atss[0]).getRange("G5").getValues();
+  let sdate = atsheet.getSheetByName(atss[0]).getRange("L9").getValues();
+
+  
+  return {mbss,mtdata,mtdlastR,mbgnss,atsheet,mtss,atss,uidno,mtgndata,mtgnlastR,q1,mtssbeforeR,mtssafterR,mtssdata,mtssbR,mtssfR,atssfpR,atssbpR,sdate,rsdbss,cinglt,      csuplt,ctchlt,reportlist2,reportlist1,reportss}
+}
+

@@ -1,0 +1,16 @@
+function transposeArray(array){
+  var result = [];
+  for (var col = 0; col < array[0].length; col++) { // Loop over array cols
+    result[col] = [];
+    for (var row = 0; row < array.length; row++) { // Loop over array rows
+      result[col][row] = array[row][col]; // Rotate
+    }
+  }
+  return result;
+}
+function objectsToArray(objects) {
+  var outputArray = [];
+  for (var i in objects) 
+    outputArray.push([objects]);
+  return outputArray;
+}
